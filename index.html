@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .button {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            background-color: hsla(206, 100%, 93%, 1);
+            display: block;
+            padding: 18px;
+            color: black;
+            border: none;
+            cursor: pointer;
+            margin-left: 12px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            border-top-right-radius: 10px;
+            border-top-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            border-bottom-left-radius: 10px;
+
+            
+        }
+
+        .modal {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            background-color: white;
+            width: 17rem;
+            min-height: 20.9rem;
+            margin-left: 9px;
+            margin-bottom: 7px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: min-height 0.3s;
+        }
+
+        .header {
+            text-align: start;
+            background: hsla(206, 100%, 93%, 1);
+            position: fixed;
+            width: 16rem;
+            height: 4rem;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+        }
+
+        .header span {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 14px;
+            padding-right: 100px;
+        }
+
+        .h-text {
+            color: black;
+            font-weight: bold;
+            padding-left: 6px;
+            font-size: 13.4px;
+        }
+
+        .progress-bars {
+            display: flex;
+            padding-right: 10px;
+            flex-direction: row;
+            align-items: center;
+            margin-top: 10px;
+            width: 250px;
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 7px;
+            width: 30%;
+            background-color: #ccc;
+            margin-right: 2px;
+            border-radius: 5px;
+        }
+
+        .progress-bar:first-child {
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+        }
+
+        .progress-bar-level {
+            height: 100%;
+            background-color: hsla(206, 100%, 77%, 1);
+            border-radius: 5px;
+        }
+        .progress-bar:last-child {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background-color:hsla(206,100%,87%,1); /* Change background color */
+}
+
+        .lists {
+            padding-top: 100px;
+            padding-right: 30px;
+            padding-left: 10px;
+            font-size: 13.5px;
+        }
+
+        .lists li {
+    padding-bottom: 24px;
+    list-style-type: none;
+    padding-left: 5px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 16rem;
+    margin-bottom: -3px;
+    transition: background-color 0.3s ease, margin-bottom 0.3s ease; /* Updated transition properties */
+}
+
+.lists li:hover {
+    background-color: #f2f2f2;
+    margin-bottom: 0; 
+}
+
+        .circular-progress {
+            width: 17px;
+            height: 17px;
+            border-radius: 50%;
+            background-color: #76eca3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+        }
+        .lists li:last-child .circular-progress {
+            background-color: hsla(206, 100%, 93%, 1); /* Change background color */
+            border: 3px solid skyblue; /* Blue border */
+        }
+        .icon {
+            color: rgb(129, 129, 129);
+            font-size: 11px;
+        }
+
+        .arrow {
+            position: absolute;
+            right: 0;
+            top: 18%;
+            transform: translateY(-50%);
+            padding-right: 27px;
+        }
+
+        .lists .first.list-item-expanded {
+            padding-bottom: 0;
+        }
+
+        .lists li .item-content {
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+        }
+
+        .popup-content {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            padding: 10px;
+            display: none;
+            z-index: 1;
+        }
+
+        .lists li.list-item-expanded {
+            margin-bottom: 190px;
+        }
+
+        .dy-data {
+            padding-left: 10px;
+            align-items: center;
+            text-align: start;
+            color: gray;
+        }
+
+        .chrome-extension{
+            display: inline-flex;
+            padding-left: 20px;
+            padding-top: 10px;
+            margin-bottom: 5px;
+            margin-top: 7px;
+            padding-right: 20px;
+            align-items: center;
+            text-align: center;
+            gap: 10px;
+            border: 1px solid #ccc;
+            border-top-left-radius: 50px;
+            border-top-right-radius: 50px;
+            border-bottom-left-radius: 50px;
+            border-bottom-right-radius: 50px;
+        }
+
+        .chrome-icon {
+            padding-bottom: 4px;
+            font-size: 12.4px;
+        }
+
+        .extension-text {
+            padding-bottom: 4px;
+            font-size: 12.4px;
+            color: black;
+            font-weight: bold;
+        }
+        .new{
+            
+            border: none;
+        
+        color: #f4e5e5;
+        
+
+        }
+    </style>
+</head>
+<body>
+    <div class="modal" id="myModal">
+        <div class="header" id="myHeader" onclick="toggleModal()">
+            <span>
+                <div class="h-text">Get started checklist</div>
+                <div> <i class="fas fa-angle-down"></i></div>
+            </span>
+            <div class="progress-bars">
+                <!-- Progress Bar 1-6 -->
+                <div class="progress-bar">
+                    <div class="progress-bar-level" style="width:100%;"></div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-bar-level" style="width:100%;"></div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-bar-level" style="width:100%;"></div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-bar-level" style="width:100%;"></div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-bar-level" style="width:100%;"></div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-bar-level" style="width:0%;"></div>
+                </div>
+                <!-- Repeat for Progress Bar 2-6 -->
+            </div>
+        </div>
+        <div class="lists">
+            <li>
+                <div class="circular-progress">
+                    <i class="icon fas fa-check"></i>
+                </div>
+                <div>Create an account</div>
+            </li>
+            <li class="first" onclick="togglePopup('popup1')">
+                <div class="circular-progress">
+                    <i class="icon fas fa-check"></i>
+                </div>
+                <div class="item-content">
+                    <span>Create an account</span>
+                    <i class="fas fa-angle-down arrow"></i>
+                </div>
+                <div id="popup1" class="popup-content">
+                    <div class="dy-data">Install the Chrome extension to <br> record from your 
+                        browser and to <br> unlock integrations like Gmail and <br> Jira.</div>
+                        <div class="chrome-extension">
+                            <i class="fab fa-chrome chrome-icon"></i>
+                            <div class="extension-text">Install Chrome Extension</div>
+                        </div>
+                        <div class="chrome-extension">
+                            <i class=" fas fa-download chrome-icon"></i>
+                            <div class="extension-text">Download Desktop App</div>
+                        </div>
+                </div>
+            </li>
+            <li onclick="togglePopup('popup2')">
+                <div class="circular-progress">
+                    <i class="icon fas fa-check"></i>
+                </div>
+                <div class="item-content">
+                    <span>Record a video</span>
+                    <i class="fas fa-angle-down arrow"></i>
+                </div>
+                <div id="popup2" class="popup-content">
+                    <div class="dy-data">Record a short video to share with<br> your teammates. Try
+                         introducing <br> yourself or replacing a meeting. </div>
+                         <div class="chrome-extension">
+                            <i class=" fas fa-video iocn"></i>
+                            <div class="extension-text">start Recording</div>
+                        </div>
+                        <div class="chrome-extension" style="border: none;">
+                            <i class="fas fa-play-circle"></i>
+                            <div class="extension-text">Learn how to record </div>
+                        </div>
+                </div>
+            </li>
+            <li onclick="togglePopup('popup3')">
+                <div class="circular-progress">
+                    <i class="icon fas fa-check"></i>
+                </div>
+                <div class="item-content">
+                    <span>Share your video</span>
+                    <i class="fas fa-angle-down arrow"></i>
+                </div>
+                <div id="popup3" class="popup-content">
+                    <div class="dy-data">Now it’s time to get some views. Try<br> sharing your last video.
+                    </div>
+                    <div class="chrome-extension new" style="background-color:#f2f2f2">
+                        <i class="fas fa-link" style="color: #010409;
+                        
+                        
+                        ",
+                        ></i>
+                        <div class="extension-text">Copy last video link</div>
+                    </div>
+                    <div class="chrome-extension" style="border: none;">
+                        <i class="fas fa-play-circle"></i>
+                        <div class="extension-text">Learn how to record</div>
+                    </div>
+                </div>
+            </li>
+            <li onclick="togglePopup('popup4')">
+                <div class="circular-progress">
+                    <i class="icon fas fa-check"></i>
+                </div>
+                <div class="item-content">
+                    <span>Get a view</span>
+                    <i class="fas fa-angle-down arrow"></i>
+                </div>
+                <div id="popup4" class="popup-content">
+                    <div class="dy-data">Slack, message or email your<br>viewers to remind them about your
+                        <br>Loom.
+                    </div>
+                   
+                    <div class="chrome-extension" style="border: none;">
+                        <i class="fas fa-play-circle" style="font-size: 10px;"></i>
+                        <div class="extension-text">Understand video engagement</div>
+                    </div>
+                </div>
+            </li>
+            <li onclick="togglePopup('popup5')">
+                <div class="circular-progress">
+                  
+                </div>
+                <div class="item-content">
+                    <span>Invite a teammate</span>
+                    <i class="fas fa-angle-down arrow"></i>
+                </div>
+                <div id="popup5" class="popup-content">
+                    <div class="dy-data">Invite your team to collaborate and<br> share videos more easily. </div>
+                        <div class="chrome-extension">
+                           <i class=" fas fa-users iocn"></i>
+                           <div class="extension-text">Invite teammates</div>
+                       </div>
+                </div>
+            </li>
+            <!-- Repeat similar structure for other items -->
+        </div>
+    </div>
+    <button class="button" id="myButton" onclick="toggleModal()">
+        Get started with Loom
+        <i class="fas fa-angle-up" style="padding-left: 3px;"></i>
+    </button>
+    <script>
+     
+    var activePopup = null;
+    var modal = document.getElementById("myModal");
+    var button = document.getElementById("myButton");
+
+    // Hide the button initially
+    button.style.display = "none";
+
+    function toggleModal() {
+        modal.style.display = modal.style.display === "none" ? "block" : "none";
+        button.style.display = modal.style.display === "block" ? "none" : "block";
+    }
+
+    function togglePopup(popupId) {
+        var popup = document.getElementById(popupId);
+        var listItem = popup.parentElement;
+
+        if (activePopup !== popup) {
+            if (activePopup) {
+                activePopup.style.display = "none";
+                activePopup.parentElement.classList.remove("list-item-expanded");
+            }
+
+            popup.style.display = "block";
+            listItem.classList.add("list-item-expanded");
+            adjustModalHeight(true);
+
+            activePopup = popup;
+        } else {
+            if (popup.style.display === "none") {
+                popup.style.display = "block";
+                listItem.classList.add("list-item-expanded");
+                adjustModalHeight(true);
+            } else {
+                popup.style.display = "none";
+                listItem.classList.remove("list-item-expanded");
+                adjustModalHeight(false);
+                activePopup = null;
+            }
+        }
+    }
+
+    function adjustModalHeight(expanded) {
+        if (expanded) {
+            modal.style.minHeight = "24.5rem";
+        } else {
+            modal.style.minHeight = "20.9rem";
+        }
+    }
+    </script>
+</body>
+</html>
